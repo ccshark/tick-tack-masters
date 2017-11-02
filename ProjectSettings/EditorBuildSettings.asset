@@ -8,9 +8,3 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoginScene.unity
     guid: 30d400d0abd094130bddfade88c03230
-  - enabled: 1
-    path: Assets/Scenes/MainMenuScene.unity
-    guid: 53248abf138b442968391416bd8780ca
-  - enabled: 1
-    path: Assets/Scenes/RegistrationScene.unity
-    guid: 06917e1f533f048ad9b732fa77467df9

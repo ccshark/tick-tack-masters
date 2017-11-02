@@ -19,6 +19,7 @@ public class AuthenticatePlayer : MonoBehaviour
 				if(!response.HasErrors)
 				{
 					Debug.Log("Player Authenticated... \n User Name: "+response.DisplayName);
+                Debug.Log(response.JSONData);
 					Application.LoadLevel(1);
 				}
 				else

@@ -3,28 +3,25 @@ using System.Collections;
 using GameSparks.Api;
 using GameSparks.Api.Requests;
 using GameSparks.Api.Responses;
+using GameSparks.Core;
 
 public class RankedMatchMaking : MonoBehaviour {
     
+
+    //GSRequestData parsedJson = new GSRequestData(json)
     public void findMatch() {
-        new FindMatchRequest()
-        .SetAction("cancel")
+        new MatchmakingRequest()
+       // .SetAction("cancel")
+       // .SetCustomQuery(customQuery)
+       // .SetMatchData(matchData)
         //.SetMatchGroup(matchGroup)
         .SetMatchShortCode("rankedMatch")
+            //.SetParticipantData({"data": {"name" : "frans"}})
         .SetSkill(2000)
         .Send((response) => {
-            Debug.Log(response.MatchData);
-            Debug.Log(response.Errors.JSON.ToString());
-            string accessToken = response.AccessToken;
-            string host = response.Host;
-           /* GSData matchData = response.MatchData;
-            string matchId = response.MatchId;
-            GSEnumerable<var> opponents = response.Opponents;
-            int? peerId = response.PeerId;
-            string playerId = response.PlayerId;
-            int? port = response.Port;
-            GSData scriptData = response.ScriptData; */
-        });
-    }
+            Debug.Log("done");
 
+        });
+
+    }
 }
