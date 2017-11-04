@@ -1,18 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using GameSparks.Core;
 using GameSparks.Api.Responses;
 using System.Linq;
-using GameSparks.Api.Requests;
-using GameSparks.Api.Messages;
 using System.Text;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 
-public class LobbyManager : MonoBehaviour
-{
+public class LobbyManager : MonoBehaviour {
 
     public Text userId, connectionStatus;
     public InputField userNameInput, passwordInput;
@@ -26,18 +20,14 @@ public class LobbyManager : MonoBehaviour
     public RTSessionInfo tempRTSessionInfo;
 
 
-    void Start()
-    {
+    void Start() {
         userId.text = "No User Logged In...";
         connectionStatus.text = "No Connection...";
 
         GS.GameSparksAvailable += (isAvailable) => {
-            if (isAvailable)
-            {
+            if (isAvailable) {
                 connectionStatus.text = "GameSparks Connected...";
-            }
-            else
-            {
+            } else {
                 connectionStatus.text = "GameSparks Disconnected...";
             }
         };
@@ -66,8 +56,7 @@ public class LobbyManager : MonoBehaviour
         });
     }
 
-    private void OnRegistration(RegistrationResponse _resp)
-    {
+    private void OnRegistration(RegistrationResponse _resp) {
         userId.text = "User ID: " + _resp.UserId;
         connectionStatus.text = "New User Registered...";
         loginPanel.SetActive(false);
@@ -76,8 +65,7 @@ public class LobbyManager : MonoBehaviour
         playerListPanel.SetActive(true);
     }
   
-    private void OnAuthentication(AuthenticationResponse _resp)
-    {
+    private void OnAuthentication(AuthenticationResponse _resp) {
         userId.text = "User ID: " + _resp.UserId;
         connectionStatus.text = "User Authenticated...";
         loginPanel.SetActive(false);
@@ -86,8 +74,7 @@ public class LobbyManager : MonoBehaviour
         playerListPanel.SetActive(true);
     }
 
-    private void OnMatchFound(GameSparks.Api.Messages.MatchFoundMessage _message)
-    {
+    private void OnMatchFound(GameSparks.Api.Messages.MatchFoundMessage _message) {
         Debug.Log("Match Found!...");
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.AppendLine("Match Found...");
@@ -97,17 +84,15 @@ public class LobbyManager : MonoBehaviour
         sBuilder.AppendLine("MatchId:" + _message.MatchId);
         sBuilder.AppendLine("Opponents:" + _message.Participants.Count());
         sBuilder.AppendLine("_________________");
-        sBuilder.AppendLine(); // we'll leave a space between the player-list and the match data
-        foreach (GameSparks.Api.Messages.MatchFoundMessage._Participant player in _message.Participants)
-        {
-            sBuilder.AppendLine("Player:" + player.PeerId + " User Name:" + player.DisplayName); // add the player number and the display name to the list
+        sBuilder.AppendLine();
+        foreach (GameSparks.Api.Messages.MatchFoundMessage._Participant player in _message.Participants) {
+            sBuilder.AppendLine("Player:" + player.PeerId + " User Name:" + player.DisplayName);
         }
-        playerList.text = sBuilder.ToString(); // set the string to be the player-list field
+        playerList.text = sBuilder.ToString();
 
-        tempRTSessionInfo = new RTSessionInfo(_message); // we'll store the match data until we need to create an RT session instance
+        tempRTSessionInfo = new RTSessionInfo(_message);
         matchmakingBttn.gameObject.SetActive(false);
         startGameBttn.gameObject.SetActive(true);
-
 
     }
 }

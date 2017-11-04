@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoginScene.unity
     guid: 30d400d0abd094130bddfade88c03230
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: d7df2c60f9f514062994cfa424a1babc
