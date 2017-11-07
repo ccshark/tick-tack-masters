@@ -8,7 +8,6 @@ public class ChatManager : MonoBehaviour {
     public GameObject chatWindow;
     public Button chatToogleBttn;
     private bool isChatWindowOpen;
-
     public InputField messageInput;
     public Button sendMessageBttn;
 
@@ -66,6 +65,7 @@ public class ChatManager : MonoBehaviour {
             chatLog.Dequeue();
         }
         chatLogOutput.text = string.Empty;
+
         foreach (string logEntry in chatLog.ToArray()) {
             chatLogOutput.text += logEntry + "\n";
         }
