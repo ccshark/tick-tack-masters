@@ -12,7 +12,7 @@ public class LobbyManager : MonoBehaviour {
     public InputField userNameInput, passwordInput;
     public GameObject loginPanel, playerListPanel;
 
-    public Button loginBttn, matchmakingBttn, startGameBttn;
+    public Button loginBttn, matchmakingBttn, startGameBttn, cancelMatchmakingBttn;
 
     public Text matchDetails, playerList;
     public GameObject matchDetailsPanel;
@@ -35,6 +35,7 @@ public class LobbyManager : MonoBehaviour {
         playerListPanel.SetActive(false);
         matchmakingBttn.gameObject.SetActive(false);
         startGameBttn.gameObject.SetActive(false);
+		cancelMatchmakingBttn.gameObject.SetActive(false);
 
         loginBttn.onClick.AddListener(() => {
             GameSparksManager.Instance().AuthenticateUser(userNameInput.text, passwordInput.text, OnRegistration, OnAuthentication);
@@ -42,8 +43,16 @@ public class LobbyManager : MonoBehaviour {
 
         matchmakingBttn.onClick.AddListener(() => {
             GameSparksManager.Instance().FindPlayers();
-            playerList.text = "Searching For Players...";
+			playerList.text = "Searching For Players...";
+			ToggleMatchmakingBttn();
         });
+
+		cancelMatchmakingBttn.onClick.AddListener(() => {
+			GameSparksManager.Instance().CancelFindPlayers();
+			playerList.text = "Canceled search";
+			ToggleMatchmakingBttn();
+
+		});
 
         GameSparks.Api.Messages.MatchNotFoundMessage.Listener = (message) => {
             playerList.text = "No Match Found...";
@@ -55,6 +64,16 @@ public class LobbyManager : MonoBehaviour {
             GameSparksManager.Instance().StartNewRTSession(tempRTSessionInfo);
         });
     }
+
+	private void ToggleMatchmakingBttn() {
+		if (matchmakingBttn.isActiveAndEnabled) {
+			matchmakingBttn.enabled = false;
+			cancelMatchmakingBttn.gameObject.SetActive (true);
+		} else {
+			matchmakingBttn.enabled = true;
+			cancelMatchmakingBttn.gameObject.SetActive (false);
+		}
+	}
 
     private void OnRegistration(RegistrationResponse _resp) {
         userId.text = "User ID: " + _resp.UserId;

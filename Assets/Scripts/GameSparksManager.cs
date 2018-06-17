@@ -11,6 +11,8 @@ public class GameSparksManager : MonoBehaviour {
     private RTSessionInfo sessionInfo;
     private ChatManager chatManager;
 
+	private MatchmakingResponse matchmakingResponse;
+
 
     public static GameSparksManager Instance() {
         if (instance != null) {
@@ -66,15 +68,29 @@ public class GameSparksManager : MonoBehaviour {
     #region Matchmaking Request
     public void FindPlayers() {
         Debug.Log("GSM| Attempting Matchmaking...");
-        new GameSparks.Api.Requests.MatchmakingRequest()
+		new GameSparks.Api.Requests.MatchmakingRequest()
             .SetMatchShortCode("rankedMatch") 
             .SetSkill(2000)
             .Send((response) => {
+				Debug.Log(response);
                 if (response.HasErrors) {
                     Debug.LogError("GSM| MatchMaking Error \n" + response.Errors.JSON);
                 }
             });
     }
+
+	public void CancelFindPlayers() {
+		Debug.Log("GSM| Attempting Canceling Matchmaking...");
+		new GameSparks.Api.Requests.MatchmakingRequest()
+			.SetAction("cancel")
+			.SetMatchShortCode("rankedMatch") 
+			.Send((response) => {
+				Debug.Log(response);
+				if (response.HasErrors) {
+					Debug.LogError("GSM| Canceling MatchMaking Error \n" + response.Errors.JSON);
+				}
+			});
+	}
     #endregion
 
 
